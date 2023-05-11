@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Von Neuman</title>
+  </head>
+  <body>
+    <header class="p-3 mb-3 text-bg-dark">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">    
+          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/main-page" class="nav-link px-2 text-white">Inicio</a></li>
+            <li><a href="/von-neuman" class="nav-link px-2 text-secondary">Von Neuman</a></li>
+            <li><a href="/cong-fund" class="nav-link px-2 text-white">Congruencia Fundamental</a></li> 
+          </ul>   
+          <div class="text-end">
+            <button type="button" class="btn btn-outline-light me-2">Ingresar</button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="container card text-white">
+      
+        <div class="text-center">
+          <h1 class="p-3 border-bottom">Metodo de Von Neuman</h1>
+        </div>
+        <div class="container border-bottom pb-3"> 
+          <h4>Entrada de datos:</h4> 
+          <form>
+            <div class="mb-3">
+              <label for="semilla" class="form-label">Semilla</label>
+              <input class="form-control text-center" name="semilla" id="semilla" type="text" minlength="4" maxlength="4" required [formControl]="semilla" (change)="descartar2()">
+              <div id="emailHelp" class="form-text">La semilla debe ser de 4 digitos</div>
+            </div>
+            <div class="mb-3">
+              <label for="repeticiones" class="form-label">Repeticiones</label>
+              <input class="form-control text-center" name="repeticiones" id="repeticiones" name="repeticiones" type="text" minlength="1" required [formControl]="repeticiones">
+            </div>
+            <div style="display: flex;"> 
+              <input class="btn btn-success" type="button" value="Generar" (click)="generarNumeros()" style="margin: 0 auto;">
+            </div>
+          </form>
+        </div>
+
+        <div class="container">
+          <div class="container">
+            <h4 class="">Secuencia generada:</h4> 
+            <div class="border text-dark bg-white" style="max-height: 300px; min-height: 300px; overflow: auto;">{{secuencia}}</div>    
+          </div>
+        </div> 
+        
+        <div class="row justify-content-center mt-3">
+          <div class="col container" style="max-width: 500px;"> 
+            <h4>Test de CHI CUADRADO:</h4> 
+            <form>
+              <div class="mb-3">
+                <label for="alpha" class="form-label">Significancia (α):</label> 
+                <input class="form-control text-center" name="alpha" id="alpha" type="text" [formControl]="significancia" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="gl" class="form-label">Grados de libertad:</label>
+                <input class="form-control text-center" name="gl" id="gl" type="text" [formControl]="gl" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="estx" class="form-label">Estadistico X<sup>2</sup>:</label>
+                <input class="form-control text-center" name="estx" id="estx" type="text" [formControl]="chicuadrado" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="pest2" class="form-label">Prueba estadistica:</label>
+                <input class="form-control text-center" name="pest2" id="pest2" type="text" [formControl]="pest2" readonly>
+              </div>
+              <div style="display: flex;"> 
+                <input class="btn btn-success" type="button" value="Calcular" (click)="comprobarChiCuadrado()" style="margin: 0 auto;">
+              </div>
+            </form>
+          </div>
+
+          <div class="col container" style="max-width: 500px;"> 
+            <h4>Test de MONOBITS:</h4> 
+            <form>
+              <div class="mb-3">
+                <label for="pvalor" class="form-label">P-Valor: </label>
+                <input class="form-control text-center" name="pvalor" id="pvalor" type="text" [formControl]="pvalor" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="sn" class="form-label">S<sub>(n)</sub></label>
+                <input class="form-control text-center" name="sn" id="sn" type="text"[formControl]="sn" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="varianza" class="form-label">S<sub>(obs)</sub></label>
+                <input class="form-control text-center" name="varianza" id="varianza" type="text"[formControl]="se" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="est2" class="form-label">Prueba estadistica:</label>
+                <input class="form-control text-center" name="est2" id="est2" type="text"[formControl]="pest" readonly>
+              </div>
+              <div style="display: flex;"> 
+                <input class="btn btn-success" type="button" value="Calcular" (click)="comprobarMonobits()" style="margin: 0 auto;">
+              </div>
+            </form>
+          </div>
+        </div>
+               
+        <div class="container border-top mt-3">
+          <div class="row justify-content-center text-center m-2">
+            <div class="col p-3">
+              <label for="chi2">DESCARTAR</label><br>
+              <a name="chi2" class="btn btn-danger btn-group-vertical" type="button" (click)="descartar()" style="border-radius: 50%; min-width: 50px; min-height: 50px; align-items: center;">
+                <i class="bi bi-trash-fill"></i>
+              </a>
+            </div>
+            <div class="col p-3">
+              <label for="chi2">GUARDAR</label><br>
+              <a name="chi2" class="btn btn-success btn-group-vertical" type="button" (click)="guardarSecuencia()" style="border-radius: 50%; min-width: 50px; min-height: 50px; align-items: center;">
+                <i class="bi bi-save-fill"></i>
+              </a>
+            </div> 
+          </div>
+        </div>
+        
+    </div>
+    <ng-template #formNum></ng-template>
+    <ngx-loading
+    [show]="loading"
+    [config]="{ backdropBorderRadius: '3px' }"
+    [template]="formNum"> 
+    </ngx-loading>
+  </body>
+</html>

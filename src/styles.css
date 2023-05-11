@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+body {
+  background-image: url("./assets/img/1086389.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.card {
+  backdrop-filter: blur(12px) saturate(183%);
+  -webkit-backdrop-filter: blur(12px) saturate(183%);
+  background-color: rgba(17, 25, 40, 0.68);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.cuerpo {
+  height: 100vh;
+}
