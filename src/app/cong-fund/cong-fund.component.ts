@@ -102,10 +102,10 @@ export class CongFundComponent {
 
     repeticiones = parseInt(repeticiones, 10);
 
-    if (repeticiones > 100){
+    if (repeticiones > 100000){
       Swal.fire({
         title: 'Error',
-        text: 'La cantidad de repeticiones debe ser un numero menor a 100',
+        text: 'La cantidad de repeticiones debe ser un numero menor o igual a 100000',
         icon: 'error',
         confirmButtonText: 'OK'
       });
@@ -135,10 +135,7 @@ export class CongFundComponent {
       }).subscribe((res)=>{
       console.log(res)
        
-      this.secuencia = "";
-      Array.from(JSON.parse(JSON.stringify(res)).mensaje.toString().split(',')).forEach(e => {
-        this.secuencia += e
-      });
+      this.secuencia = JSON.parse(JSON.stringify(res)).mensaje
       this.loading = false
       Swal.fire({
         title: 'Correcto',
@@ -163,8 +160,23 @@ export class CongFundComponent {
 
   comprobarChiCuadrado():any{
     this.loading = true
+    let vi:any = this.vi.value 
+    let vik:any = this.vik.value
+    let a:any = this.a.value 
+    let c:any = this.c.value
+    let k:any = this.k.value 
+    let m:any = this.m.value
+    let repeticiones:any = this.repeticiones.value
     __await(this.http.post(environment.url + '/app-controller/comprobar/chi-cuadrado', {
-      'secuencia':this.secuencia.toString()
+      'vi':vi,
+      'vik':vik,
+      'a':a,
+      'c':c,
+      'k':k,
+      'm':m,
+      'n':repeticiones,
+      'cong':true,
+      'von':false
     }).subscribe((res:any)=>{
       console.log(res) 
       this.chicuadrado.setValue(res.chicuadrado.toString()) 
@@ -188,8 +200,23 @@ export class CongFundComponent {
 
   comprobarMonobits():any{
     this.loading = true
+    let vi:any = this.vi.value 
+    let vik:any = this.vik.value
+    let a:any = this.a.value 
+    let c:any = this.c.value
+    let k:any = this.k.value 
+    let m:any = this.m.value
+    let repeticiones:any = this.repeticiones.value
     __await(this.http.post(environment.url + '/app-controller/comprobar/monobits', { 
-        'secuencia':this.secuencia.toString()
+      'vi':vi,
+      'vik':vik,
+      'a':a,
+      'c':c,
+      'k':k,
+      'm':m,
+      'n':repeticiones,
+      'cong':true,
+      'von':false
       }).subscribe((res:any)=>{
         console.log(res) 
         this.pvalor.setValue(res.pvalor.toString()) 
@@ -220,8 +247,7 @@ export class CongFundComponent {
         'c':this.c.value,
         'k':this.k.value,
         'm':this.m.value,
-        'repeticiones':this.repeticiones.value,
-        'secuencia':this.secuencia
+        'repeticiones':this.repeticiones.value
       }).subscribe((res)=>{
       console.log(res)  
       this.loading = false

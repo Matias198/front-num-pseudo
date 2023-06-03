@@ -32,33 +32,33 @@
         <form>
           <div class="mb-3">
             <label for="vi" class="form-label">Valor Inicial (V[i])</label>
-            <input class="form-control text-center" name="vi" id="vi" type="text" required [formControl]="vi">
+            <input class="form-control text-center" name="vi" id="vi" type="number" required [formControl]="vi">
             <div class="form-text">Debe ser mayor a 0 y menor a "m"</div>
           </div> 
           <div class="mb-3">
             <label for="vik" class="form-label">Valor Inicial Anterior (V[i-k])</label>
-            <input class="form-control text-center" name="vik" id="vik" type="text" required [formControl]="vik">
+            <input class="form-control text-center" name="vik" id="vik" type="number" required [formControl]="vik">
             <div class="form-text">Debe ser mayor o igual a 0 y menor a "m"</div>
           </div>
           <div class="mb-3">
             <label for="a" class="form-label">Valor a</label>
-            <input class="form-control text-center" name="a" id="a" type="text" required [formControl]="a">
+            <input class="form-control text-center" name="a" id="a" type="number" required [formControl]="a">
             <div class="form-text">Debe ser mayor a 0 y menor a "m"</div>
           </div>
           <div class="mb-3">
             <label for="c" class="form-label">Valor c</label>
-            <input class="form-control text-center" name="c" id="c" type="text" required [formControl]="c">
+            <input class="form-control text-center" name="c" id="c" type="number" required [formControl]="c">
             <div class="form-text">Debe ser mayor 0</div>
           </div>
           <div class="mb-3">
             <label for="k" class="form-label">Valor k</label>
-            <input class="form-control text-center" name="k" id="k" type="text" required [formControl]="k">
+            <input class="form-control text-center" name="k" id="k" type="number" required [formControl]="k">
             <div class="form-text">Debe ser mayor o igual a 0 y menor que la cantidad de repeticiones</div>
           </div>
 
           <div class="mb-3">
             <label for="m" class="form-label">Valor m</label>
-            <input class="form-control text-center" name="m" id="m" type="text" required [formControl]="m">
+            <input class="form-control text-center" name="m" id="m" type="number" required [formControl]="m">
             <div class="form-text">Debe ser mayor a 0</div>
           </div>
           <div class="mb-3">

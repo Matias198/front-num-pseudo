@@ -45,10 +45,10 @@ export class VonNeumanComponent{
 
       repeticiones = parseInt(repeticiones, 10);
 
-      if (repeticiones > 100){
+      if (repeticiones > 100000){
         Swal.fire({
           title: 'Error',
-          text: 'La cantidad de repeticiones debe ser un numero menor a 100',
+          text: 'La cantidad de repeticiones debe ser un numero menor a 100000',
           icon: 'error',
           confirmButtonText: 'OK'
         });
@@ -101,8 +101,13 @@ export class VonNeumanComponent{
 
     comprobarChiCuadrado():any{
       this.loading = true
-      __await(this.http.post(environment.url + '/von-neuman/comprobar/chi-cuadrado', {
-        'secuencia':this.secuencia.toString()
+      let semilla:any = this.semilla.value 
+      let repeticiones:any = this.repeticiones.value
+      __await(this.http.post(environment.url + '/app-controller/comprobar/chi-cuadrado', {
+        'semilla':semilla,
+        'repeticiones':repeticiones,
+        'von':true,
+        'cong':false
       }).subscribe((res:any)=>{
         console.log(res) 
         this.chicuadrado.setValue(res.chicuadrado.toString()) 
@@ -126,8 +131,13 @@ export class VonNeumanComponent{
 
     comprobarMonobits():any{
       this.loading = true
-      __await(this.http.post(environment.url + '/von-neuman/comprobar/monobits', { 
-          'secuencia':this.secuencia.toString()
+      let semilla:any = this.semilla.value 
+      let repeticiones:any = this.repeticiones.value
+      __await(this.http.post(environment.url + '/app-controller/comprobar/monobits', { 
+        'semilla':semilla,
+        'repeticiones':repeticiones,
+        'von':true,
+        'cong':false
         }).subscribe((res:any)=>{
           console.log(res) 
           this.pvalor.setValue(res.pvalor.toString()) 
