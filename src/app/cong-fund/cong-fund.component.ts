@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core'; 
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.development';
 import Swal from 'sweetalert2'
 import { __await } from 'tslib'; 
@@ -13,15 +14,15 @@ import { __await } from 'tslib';
 export class CongFundComponent {
   public loading = false;
     
-  vi = new FormControl('5');
-  vik = new FormControl('4');
-  a = new FormControl('5');
-  c = new FormControl('3');
-  k = new FormControl('1');
-  m = new FormControl('100');
+  vi = new FormControl('');
+  vik = new FormControl('');
+  a = new FormControl('');
+  c = new FormControl('');
+  k = new FormControl('');
+  m = new FormControl('');
 
 
-  repeticiones = new FormControl('50');
+  repeticiones = new FormControl('');
   significancia = new FormControl('');
   chicuadrado = new FormControl('');
   pvalor = new FormControl('');
@@ -32,7 +33,23 @@ export class CongFundComponent {
   gl = new FormControl('');
   secuencia = ""
 
-  constructor(private http:HttpClient){}
+  constructor(private http:HttpClient, private rutas:Router){}
+
+  goToVonNeuman(){
+    this.rutas.navigate(['von-neuman']);
+  }
+
+  goToNumGenHistory(){
+    this.rutas.navigate(['num-gen/historial']);
+  }
+  
+  goToNumGen(){
+    this.rutas.navigate(['num-gen']);
+  }
+
+  goToExistencias(){
+    this.rutas.navigate(['existencias']);
+  }
 
   generarNumeros():any{
     let vi:any = this.vi.value 

@@ -1,0 +1,152 @@
+<nb-layout>
+    <nb-layout-header fixed>
+      <mat-toolbar class="bg-cosmic">
+        <span><strong>MODELO Y SIMULACION</strong></span>
+      </mat-toolbar>
+      <span class="example-spacer"></span>
+      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+        <mat-icon>bookmark</mat-icon>
+      </button>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>share</mat-icon>
+      </button>
+    </nb-layout-header>
+  
+    <nb-sidebar>
+        <nb-accordion>
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                Generador de <br> Numeros
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <a mat-button class="item" (click)="goToVonNeuman()">Von Neuman</a>
+                <br>
+                <a mat-button class="item" (click)="goToCongFund()">Congruencias</a>  
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+           
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                Muestras aleatorias
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <a mat-button class="item" disabled>Generar valores</a>
+                <br>
+                <a mat-button class="item" (click)="goToNumGenHistory()">Historial</a> 
+              </nb-accordion-item-body>  
+            </nb-accordion-item>
+      
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                Modelos
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <a mat-button class="item" (click)="goToExistencias()">Existencias</a>
+              </nb-accordion-item-body>  
+            </nb-accordion-item>
+      
+          </nb-accordion>
+      
+    </nb-sidebar>
+    
+    <nb-layout-column>
+  
+    <div class="container card text-white">
+        
+        <div class="text-center">
+          <h1 class="p-3 border-bottom">Generador de Numeros Aleatorios</h1>
+        </div>
+        <div class="container border-bottom pb-3"> 
+          <h4>Entrada de datos:</h4>  
+          <form>
+            <div class="mb-3">
+              <label for="cant" class="form-label">Cantidad de datos a generar</label>
+              <input #cant class="form-control text-center" name="cant" id="cant" type="number">
+            </div> 
+            <div class="mb-3">
+              <label class="form-label"><strong>Método</strong></label>
+              <nb-card-body> 
+                <nb-radio-group>
+                  <nb-radio
+                    *ngFor="let option of options"
+                    [value]="option.value"
+                    [checked]="option.checked"
+                    (click)="seleccionDeMetodo(option.value)">
+                    {{ option.label }}
+                  </nb-radio>
+                </nb-radio-group> 
+              </nb-card-body>
+            </div>
+            <div class="mb-3">
+                <label for="vik" class="form-label"><strong>Test que debe pasar la generacion</strong></label>
+                <br>
+                <nb-toggle status="primary" [checked]="monobits" (change)="cambiarEstadoTest(1)">Monobits</nb-toggle>
+                <br>
+                <nb-toggle status="primary" [checked]="chi" (change)="cambiarEstadoTest(0)">Chi cuadrado</nb-toggle>
+              </div>
+            <div style="display: flex;"> 
+              <input class="btn btn-success" type="button" value="Generar" (click)="generarNumeros(cant.value)" style="margin: 0 auto;">
+            </div>
+          </form>
+        </div>
+               
+        <div class="container mt-2">
+            <div class="container">
+              <h4 class="mb-2">Secuencia generada:</h4> 
+              <div class="container border-bottom pb-3"> 
+                <div class="mat-elevation-z8">
+                  <table class="demo-table" mat-table [dataSource]="dataSource">
+                
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                      <th mat-header-cell *matHeaderCellDef> ID. </th>
+                      <td mat-cell *matCellDef="let element"> {{element?.id}} </td>
+                    </ng-container>
+                
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                      <th mat-header-cell *matHeaderCellDef> Semilla </th>
+                      <td class="text-center" mat-cell *matCellDef="let element"> {{element?.semilla}} </td>
+                    </ng-container>
+                
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="weight">
+                      <th mat-header-cell *matHeaderCellDef> Generador </th>
+                      <td mat-cell *matCellDef="let element"> {{element?.generador}} </td>
+                    </ng-container>
+                
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="symbol">
+                      <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                      <td mat-cell *matCellDef="let element"> {{element?.cantidad}} </td>
+                    </ng-container>
+  
+                     <!-- Symbol Column -->
+                     <ng-container matColumnDef="chi">
+                      <th mat-header-cell *matHeaderCellDef> Test Chi2 </th>
+                      <td mat-cell *matCellDef="let element"> {{element?.chi}} </td>
+                    </ng-container>
+  
+                     <!-- Symbol Column -->
+                     <ng-container matColumnDef="mono">
+                      <th mat-header-cell *matHeaderCellDef> Test Monobits </th>
+                      <td mat-cell *matCellDef="let element"> {{element?.mono}} </td>
+                    </ng-container>
+                
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table> 
+                </div>              
+              </div>
+            </div>
+          </div> 
+        
+    </div>
+    <ng-template #formNum></ng-template>
+    <ngx-loading
+    [show]="loading"
+    [config]="{ fullScreenBackdrop: true }"
+    [template]="formNum"> 
+    </ngx-loading>
+  </nb-layout-column>
+  

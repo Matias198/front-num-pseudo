@@ -1,29 +1,56 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
-</head>
-<body>
-    <header class="p-3 mb-3 text-bg-dark">
-        <div class="container">
-          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">    
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li><a href="/main-page" class="nav-link px-2 text-secondary">Inicio</a></li>
-              <li><a href="/von-neuman" class="nav-link px-2 text-white">Von Neuman</a></li>
-              <li><a href="/cong-fund" class="nav-link px-2 text-white">Congruencia Fundamental</a></li> 
-            </ul>   
-            <div class="text-end">
-              <button type="button" class="btn btn-outline-light me-2">Ingresar</button>
-            </div>
-          </div>
-        </div>
-    </header>
-    <div class="container cuerpo card mt-3 mb-3 text-white">
-        <a href="/von-neuman" class="nav-link"><h3><i class="bi bi-1-circle-fill"></i> Método de Von Neuman</h3></a>
-        <a href="/cong-fund" class="nav-link"><h3><i class="bi bi-2-circle-fill"></i> Método de Congruencia Fundamental</h3></a>
-    </div>
-</body>
-</html>
+<nb-layout>
+  <nb-layout-header fixed>
+    <mat-toolbar class="bg-cosmic">
+      <span><strong>MODELO Y SIMULACION</strong></span>
+    </mat-toolbar>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>bookmark</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </nb-layout-header>
+
+  <nb-sidebar>
+    <nb-accordion>
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Generador de <br> Numeros
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <a mat-button class="item" (click)="goToVonNeuman()">Von Neuman</a>
+          <br>
+          <a mat-button class="item" (click)="goToCongFund()">Congruencias</a>  
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+     
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Muestras aleatorias
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <a mat-button class="item" (click)="goToNumGen()">Generar valores</a>
+          <br>
+          <a mat-button class="item" (click)="goToNumGenHistory()">Historial</a> 
+        </nb-accordion-item-body>  
+      </nb-accordion-item>
+
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Modelos
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <a mat-button class="item" (click)="goToExistencias()">Existencias</a>
+        </nb-accordion-item-body>  
+      </nb-accordion-item>
+
+    </nb-accordion>
+    
+  </nb-sidebar>
+  
+  <nb-layout-column>
+  
+  </nb-layout-column>
+    
+</nb-layout>

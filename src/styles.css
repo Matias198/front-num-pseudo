@@ -1,12 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~bootstrap-icons/font/bootstrap-icons.css";
+@import url('/node_modules/@nebular/theme/styles/prebuilt/cosmic.css');
+/*@import "/node_modules/nebular/theme/styles/prebuilt/cosmic.css"; */
 
 body {
-  background-image: url("./assets/img/1086389.png");
+  /*background-image: url("./assets/img/1086389.png");*/
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.bg-cosmic{
+  background-color: #323259;
 }
 
 .card {
@@ -20,3 +26,6 @@ body {
 .cuerpo {
   height: 100vh;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

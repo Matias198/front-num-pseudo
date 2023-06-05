@@ -1,0 +1,145 @@
+<nb-layout>
+    <nb-layout-header fixed>
+      <mat-toolbar class="bg-cosmic">
+        <span><strong>MODELO Y SIMULACION</strong></span>
+      </mat-toolbar>
+      <span class="example-spacer"></span>
+      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+        <mat-icon>bookmark</mat-icon>
+      </button>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>share</mat-icon>
+      </button>
+    </nb-layout-header>
+  
+    <nb-sidebar>
+        <nb-accordion>
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                Generador de <br> Numeros
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <a mat-button class="item" (click)="goToVonNeuman()">Von Neuman</a>
+                <br>
+                <a mat-button class="item" (click)="goToCongFund()">Congruencias</a>  
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+           
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                Muestras aleatorias
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <a mat-button class="item" (click)="goToNumGen()">Generar valores</a>
+                <br>
+                <a mat-button class="item" disabled>Historial</a> 
+              </nb-accordion-item-body>  
+            </nb-accordion-item>
+      
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                Modelos
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <a mat-button class="item" (click)="goToExistencias()">Existencias</a>
+              </nb-accordion-item-body>  
+            </nb-accordion-item>
+      
+          </nb-accordion>
+      
+    </nb-sidebar>
+    
+    <nb-layout-column>
+        <div class="container card text-white">
+      
+            <div class="text-center">
+              <h1 class="p-3 border-bottom">Muestras Aleatorias Generadas</h1>
+            </div>
+            <div class="container border-bottom pb-3"> 
+              <div class="mat-elevation-z8">
+                <table class="demo-table" mat-table [dataSource]="dataSource">
+              
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> ID. </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.id}} </td>
+                  </ng-container>
+              
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Semilla </th>
+                    <td class="text-center" mat-cell *matCellDef="let element"> {{element?.semilla}} </td>
+                  </ng-container>
+              
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef> Generador </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.generador}} </td>
+                  </ng-container>
+              
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.cantidad}} </td>
+                  </ng-container>
+
+                   <!-- Symbol Column -->
+                   <ng-container matColumnDef="chi">
+                    <th mat-header-cell *matHeaderCellDef> Test Chi2 </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.chi}} </td>
+                  </ng-container>
+
+                   <!-- Symbol Column -->
+                   <ng-container matColumnDef="mono">
+                    <th mat-header-cell *matHeaderCellDef> Test Monobits </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.mono}} </td>
+                  </ng-container>
+              
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row 
+                  (click)="verDetalles(row)"
+                  
+                  *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              
+                <mat-paginator #paginator
+                               class="paginator"  
+                               [pageSize]="10"
+                               [hidePageSize]="true"
+                               [showFirstLastButtons]="true"
+                               (page)="handlePageEvent($event)"
+                               aria-label="Select page of periodic elements">
+                </mat-paginator> 
+              </div>              
+            </div>
+            
+            <div class="container">
+                <div style="display: block">
+                    <canvas baseChart class="chart"
+                    [data]="lineChartData"
+                    [options]="lineChartOptions"
+                    [type]="lineChartType" ></canvas>
+                  </div>
+            </div> 
+                   
+            <div class="container border-top mt-3">
+              <div class="row justify-content-center text-center m-2">
+                <div class="col">
+                  <label for="chi2">DESCARTAR</label><br>
+                  <a name="chi2" class="btn btn-danger btn-group-vertical" type="button" (click)="deleteRow()" style="border-radius: 50%; min-width: 50px; min-height: 50px; align-items: center;">
+                    <i class="bi bi-trash" style="color:white"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+        </div>
+        <ng-template #formNum></ng-template>
+        <ngx-loading
+        [show]="loading"
+        [config]="{ fullScreenBackdrop: true }"
+        [template]="formNum"> 
+        </ngx-loading>
+    </nb-layout-column>
+      
+  </nb-layout>

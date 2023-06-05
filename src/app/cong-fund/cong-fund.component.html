@@ -1,29 +1,58 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Congruencia Fundamental</title>
-</head>
-<body>
-    <header class="p-3 mb-3 text-bg-dark">
-        <div class="container">
-          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">    
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li><a href="/main-page" class="nav-link px-2 text-white">Inicio</a></li>
-              <li><a href="/von-neuman" class="nav-link px-2 text-white">Von Neuman</a></li>
-              <li><a href="/cong-fund" class="nav-link px-2 text-secondary">Congruencia Fundamental</a></li> 
-            </ul>   
-            <div class="text-end">
-              <button type="button" class="btn btn-outline-light me-2">Ingresar</button>
-            </div>
-          </div>
-        </div>
-    </header>
+<nb-layout>
+  <nb-layout-header fixed>
+    <mat-toolbar class="bg-cosmic">
+      <span><strong>MODELO Y SIMULACION</strong></span>
+    </mat-toolbar>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>bookmark</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </nb-layout-header>
+
+  <nb-sidebar>
+    <nb-accordion>
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Generador de <br> Numeros
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <a mat-button class="item" (click)="goToVonNeuman()">Von Neuman</a>
+          <br>
+          <a mat-button class="item" disabled>Congruencias</a>  
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+     
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Muestras aleatorias
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <a mat-button class="item" (click)="goToNumGen()">Generar valores</a>
+          <br>
+          <a mat-button class="item" (click)="goToNumGenHistory()">Historial</a> 
+        </nb-accordion-item-body>  
+      </nb-accordion-item>
+
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Modelos
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <a mat-button class="item" (click)="goToExistencias()">Existencias</a>
+        </nb-accordion-item-body>  
+      </nb-accordion-item>
+
+    </nb-accordion>
     
+  </nb-sidebar>
+  
+  <nb-layout-column>
+        
     <div class="container card text-white">
-      
+          
       <div class="text-center">
         <h1 class="p-3 border-bottom">Metodo de Congruencia Fundamental</h1>
       </div>
@@ -129,30 +158,33 @@
           </form>
         </div>
       </div>
-             
+      <!--      
       <div class="container border-top mt-3">
         <div class="row justify-content-center text-center m-2">
           <div class="col p-3">
             <label for="chi2">DESCARTAR</label><br>
             <a name="chi2" class="btn btn-danger btn-group-vertical" type="button" (click)="descartar()" style="border-radius: 50%; min-width: 50px; min-height: 50px; align-items: center;">
-              <i class="bi bi-trash-fill"></i>
+              <i class="bi bi-trash-fill" style="color:white"></i>
             </a>
           </div>
           <div class="col p-3">
             <label for="chi2">GUARDAR</label><br>
             <a name="chi2" class="btn btn-success btn-group-vertical" type="button" (click)="guardarSecuencia()" style="border-radius: 50%; min-width: 50px; min-height: 50px; align-items: center;">
-              <i class="bi bi-save-fill"></i>
+              <i class="bi bi-save-fill" style="color:white"></i>
             </a>
           </div> 
         </div>
       </div>
+    -->
       
-  </div>
-  <ng-template #formNum></ng-template>
-  <ngx-loading
-  [show]="loading"
-  [config]="{ backdropBorderRadius: '3px' }"
-  [template]="formNum"> 
-  </ngx-loading>
-</body>
-</html>
+    </div>
+    <ng-template #formNum></ng-template>
+    <ngx-loading
+    [show]="loading"
+    [config]="{ fullScreenBackdrop: true }"
+    [template]="formNum"> 
+    </ngx-loading>
+  
+  </nb-layout-column>
+    
+</nb-layout>

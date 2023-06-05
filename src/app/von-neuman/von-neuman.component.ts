@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core'; 
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.development';
 import Swal from 'sweetalert2'
 import { __await } from 'tslib'; 
@@ -26,7 +27,23 @@ export class VonNeumanComponent{
     gl = new FormControl('');
     secuencia = ""
 
-    constructor(private http:HttpClient){}
+    constructor(private http:HttpClient, private rutas:Router){}
+
+    goToCongFund(){
+      this.rutas.navigate(['cong-fund']);
+    }
+    
+    goToNumGen(){
+      this.rutas.navigate(['num-gen']);
+    }
+  
+    goToExistencias(){
+      this.rutas.navigate(['existencias']);
+    }
+  
+    goToNumGenHistory(){
+      this.rutas.navigate(['num-gen/historial']);
+    }
 
     generarNumeros():any{
       let semilla:any = this.semilla.value 
@@ -73,10 +90,12 @@ export class VonNeumanComponent{
         }).subscribe((res)=>{
         console.log(res)
          
-        this.secuencia = "";
+        this.secuencia = JSON.parse(JSON.stringify(res)).mensaje;
+        /*
         Array.from(JSON.parse(JSON.stringify(res)).mensaje.toString().split(',')).forEach(e => {
           this.secuencia += e
         });
+        */
         this.loading = false
         Swal.fire({
           title: 'Correcto',
