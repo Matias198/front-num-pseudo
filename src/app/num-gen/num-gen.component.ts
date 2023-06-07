@@ -44,45 +44,55 @@ export class NumGenComponent implements OnInit{
   generarNumeros(cantidad:any){
     this.loading = true
     let body =  {'cantidad':parseInt(cantidad), 'chi':this.chi, 'mono':this.monobits}
-    this.http.post(environment.url + '/num-gen/crear-von-neuman', body).subscribe((res)=>{
-      this.loading = false 
-      let response:any = JSON.parse(JSON.stringify(res)) 
-
-      let ELEMENT_DATA: PeriodicElement[] = [
-        { id: response.id, semilla: response.semilla, generador: response.generador, cantidad: response.cantidad, mono: response.mono, chi: response.chi, numeros: response.numros},
-      ]; 
-
-      console.log(ELEMENT_DATA)
-      this.dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA) 
-      ELEMENT_DATA.forEach((element:any)=>{
-        this.listaAnterior.push(element)
-      }) 
-      this.dataSource = new MatTableDataSource<PeriodicElement>(this.listaAnterior.sort());
-      Swal.fire({
-        title: 'OK',
-        text: 'Secuencia de numeros generada correctamente con id: ' + response.id,
-        icon: 'success',
-        confirmButtonText: 'OK'
-      });
-    },(err)=>{
-      this.loading = false
-      Swal.fire({
-        title: 'Error',
-        text: 'Error interno del servidor',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
-      console.log(err)
-    })
+    if (this.valor == 'Von Neuman'){
+      this.http.post(environment.url + '/num-gen/crear-von-neuman', body).subscribe((res)=>{
+        this.calcularValor(res)
+      },(err)=>{
+        this.loading = false
+        this.mensajeError()
+        console.log(err)
+      })
+    }else{
+      console.log("creando congruencias")
+      this.http.post(environment.url + '/num-gen/crear-congruencias', body).subscribe((res)=>{
+        this.calcularValor(res)
+      },(err)=>{
+        this.mensajeError()
+        console.log(err)
+      })
+    }   
   }
-  /*let ELEMENT_DATA:PeriodicElement[] = []
-      ELEMENT_DATA.push(response.id)
-      ELEMENT_DATA.push(response.semilla)
-      ELEMENT_DATA.push(response.generador)
-      ELEMENT_DATA.push(response.cantidad)
-      ELEMENT_DATA.push(response.mono)
-      ELEMENT_DATA.push(response.chi)*/
   
+  mensajeError(){
+    this.loading = false
+    Swal.fire({
+      title: 'Error',
+      text: 'Error interno del servidor',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    }); 
+  }
+
+  calcularValor(res:any){
+    this.loading = false 
+    let response:any = JSON.parse(JSON.stringify(res))
+    let ELEMENT_DATA: PeriodicElement[] = [
+      { id: response.id, semilla: response.semilla, generador: response.generador, cantidad: response.cantidad, mono: response.mono, chi: response.chi, numeros: response.numros},
+    ];  
+    console.log(ELEMENT_DATA)
+    this.dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA) 
+    ELEMENT_DATA.forEach((element:any)=>{
+      this.listaAnterior.push(element)
+    }) 
+    this.dataSource = new MatTableDataSource<PeriodicElement>(this.listaAnterior.sort());
+    Swal.fire({
+      title: 'OK',
+      text: 'Secuencia de numeros generada correctamente con id: ' + response.id,
+      icon: 'success',
+      confirmButtonText: 'OK'
+    });
+  }
+
   goToVonNeuman(){
     this.rutas.navigate(['von-neuman']);
   }

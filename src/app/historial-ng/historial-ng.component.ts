@@ -104,7 +104,7 @@ export class HistorialNgComponent implements OnInit {
     const probabilidades = valoresZ.map(z => this.calcularFuncionDensidadProbabilidad(z));
 
         
-    this.lineChartData.datasets[0].data = datosContinuos.sort()
+    this.lineChartData.datasets[0].data = datosContinuos
     this.lineChartData.labels = datosContinuos.map((_, index) => index.toString()); // valoresZ.map(String);
     let aux = JSON.parse(JSON.stringify(this.lineChartOptions))
     aux.scales = 
@@ -165,6 +165,7 @@ export class HistorialNgComponent implements OnInit {
     let url = environment.url + '/num-gen/borrar/'+this.e.id
     this.http.delete(url).subscribe(
       (resp)=>{
+        this.listaAnterior = []
         this.buscarElementos(this.pagina, this.tPagina)
         console.log(resp)
       }
@@ -174,6 +175,7 @@ export class HistorialNgComponent implements OnInit {
   buscarElementos(pagina:any, tPagina:any){
     let body = {'pagina':pagina,'tPagina':tPagina}
     this.http.post(environment.url + '/num-gen/listar', body).subscribe((res)=>{
+      console.log(res)
       let response:any = JSON.parse(JSON.stringify(res))
       let ELEMENT_DATA:PeriodicElement[] = Array.from(response)
       let secuencia:any 
