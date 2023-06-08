@@ -23,6 +23,8 @@ import { NumGenComponent } from './num-gen/num-gen.component';
 import { ExistenciasComponent } from './existencias/existencias.component'; 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -64,9 +66,10 @@ import {MatSelectModule} from '@angular/material/select';
     MatFormFieldModule,
     MatSelectModule,
     NbRadioModule,
-    NbToggleModule 
+    NbToggleModule,
+    MatInputModule  
   ],
-  providers: [],
+  providers: [{provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

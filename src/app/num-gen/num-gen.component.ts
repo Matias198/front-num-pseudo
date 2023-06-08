@@ -65,8 +65,13 @@ export class NumGenComponent implements OnInit{
   
   mensajeError(){
     this.loading = false
-    Swal.fire({
-      title: 'Error',
+    Swal.fire({ 
+      title: '<h1 style="color:white;">Error</h1>',   
+      background:'rgba(30, 30, 30)',
+      color: 'white',
+      backdrop: `
+      rgba(53,53,53,0.4)
+      ` , 
       text: 'Error interno del servidor',
       icon: 'error',
       confirmButtonText: 'OK'
@@ -86,7 +91,12 @@ export class NumGenComponent implements OnInit{
     }) 
     this.dataSource = new MatTableDataSource<PeriodicElement>(this.listaAnterior.sort());
     Swal.fire({
-      title: 'OK',
+      title: '<h1 style="color:white;">Correcto</h1>',   
+      background:'rgba(30, 30, 30)',
+      color: 'white',
+      backdrop: `
+      rgba(53,53,53,0.4)
+      ` , 
       text: 'Secuencia de numeros generada correctamente con id: ' + response.id,
       icon: 'success',
       confirmButtonText: 'OK'

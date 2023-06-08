@@ -63,7 +63,12 @@ export class CongFundComponent {
  
     if (!(vi > 0 || vi < m)){
       Swal.fire({
-        title: 'Error',
+        title: '<h1 style="color:white;">Error</h1>',   
+        background:'rgba(30, 30, 30)',
+        color: 'white',
+        backdrop: `
+        rgba(53,53,53,0.4)
+        ` ,
         text: 'El valor de V(i) debe ser mayor a 0 y menor que "m"',
         icon: 'error',
         confirmButtonText: 'OK'
@@ -72,7 +77,12 @@ export class CongFundComponent {
     }
     if (!(vik >= 0 || vik < m)){
       Swal.fire({
-        title: 'Error',
+        title: '<h1 style="color:white;">Error</h1>',   
+        background:'rgba(30, 30, 30)',
+        color: 'white',
+        backdrop: `
+        rgba(53,53,53,0.4)
+        ` ,
         text: 'El valor de V(i-k) debe ser mayor o igual a 0 y menor que "m"',
         icon: 'error',
         confirmButtonText: 'OK'
@@ -81,7 +91,12 @@ export class CongFundComponent {
     }
     if (!(a > 0 || a < m)){
       Swal.fire({
-        title: 'Error',
+        title: '<h1 style="color:white;">Error</h1>',   
+        background:'rgba(30, 30, 30)',
+        color: 'white',
+        backdrop: `
+        rgba(53,53,53,0.4)
+        ` ,
         text: 'El valor de "a" debe ser mayor a 0 y menor que "m"',
         icon: 'error',
         confirmButtonText: 'OK'
@@ -90,7 +105,12 @@ export class CongFundComponent {
     }
     if (!(c > 0)){
       Swal.fire({
-        title: 'Error',
+        title: '<h1 style="color:white;">Error</h1>',   
+        background:'rgba(30, 30, 30)',
+        color: 'white',
+        backdrop: `
+        rgba(53,53,53,0.4)
+        ` ,
         text: 'El valor de "c" debe ser mayor a 0',
         icon: 'error',
         confirmButtonText: 'OK'
@@ -99,7 +119,12 @@ export class CongFundComponent {
     }
     if (!(k > 0 || k < repeticiones)){
       Swal.fire({
-        title: 'Error',
+        title: '<h1 style="color:white;">Error</h1>',   
+        background:'rgba(30, 30, 30)',
+        color: 'white',
+        backdrop: `
+        rgba(53,53,53,0.4)
+        ` ,
         text: 'El valor de "k" debe ser mayor o igual a 0 y menor que la cantidad de repeticiones',
         icon: 'error',
         confirmButtonText: 'OK'
@@ -108,10 +133,15 @@ export class CongFundComponent {
     }
     if (!(m > 0)){
       Swal.fire({
-        title: 'Error',
+        title: '<h1 style="color:white;">Error</h1>',   
+        background:'rgba(30, 30, 30)',
+        color: 'white',
+        backdrop: `
+        rgba(53,53,53,0.4)
+        ` , 
         text: 'El valor de "m" debe ser mayor a 0',
         icon: 'error',
-        confirmButtonText: 'OK'
+        confirmButtonText: 'OK'  
       });
       return 1;
     }
@@ -121,7 +151,12 @@ export class CongFundComponent {
 
     if (repeticiones > 100000){
       Swal.fire({
-        title: 'Error',
+        title: '<h1 style="color:white;">Error</h1>',   
+        background:'rgba(30, 30, 30)',
+        color: 'white',
+        backdrop: `
+        rgba(53,53,53,0.4)
+        ` ,
         text: 'La cantidad de repeticiones debe ser un numero menor o igual a 100000',
         icon: 'error',
         confirmButtonText: 'OK'
@@ -131,7 +166,12 @@ export class CongFundComponent {
 
     if (isNaN(repeticiones) || repeticiones <= 0){
       Swal.fire({
-        title: 'Error',
+        title: '<h1 style="color:white;">Error</h1>',   
+        background:'rgba(30, 30, 30)',
+        color: 'white',
+        backdrop: `
+        rgba(53,53,53,0.4)
+        ` ,
         text: 'La cantidad de repeticiones debe ser un numero mayor a 0',
         icon: 'error',
         confirmButtonText: 'OK'
@@ -155,7 +195,12 @@ export class CongFundComponent {
       this.secuencia = JSON.parse(JSON.stringify(res)).mensaje
       this.loading = false
       Swal.fire({
-        title: 'Correcto',
+        title: '<h1 style="color:white;">Correcto</h1>',   
+        background:'rgba(30, 30, 30)',
+        color: 'white',
+        backdrop: `
+        rgba(53,53,53,0.4)
+        ` , 
         text: 'La secuencia se generó correctamente',
         icon: 'success',
         confirmButtonText: 'OK'
@@ -166,7 +211,12 @@ export class CongFundComponent {
       console.log(err)
       this.loading = false
       Swal.fire({
-        title: 'Error',
+        title: '<h1 style="color:white;">Error</h1>',   
+        background:'rgba(30, 30, 30)',
+        color: 'white',
+        backdrop: `
+        rgba(53,53,53,0.4)
+        ` ,
         text: 'Ocurrió un error inesperado',
         icon: 'error',
         confirmButtonText: 'OK'
@@ -205,7 +255,12 @@ export class CongFundComponent {
       console.log(err)
       this.loading = false
       Swal.fire({
-        title: 'Error',
+        title: '<h1 style="color:white;">Error</h1>',   
+        background:'rgba(30, 30, 30)',
+        color: 'white',
+        backdrop: `
+        rgba(53,53,53,0.4)
+        ` ,
         text: 'Ocurrió un error inesperado',
         icon: 'error',
         confirmButtonText: 'OK'
@@ -246,7 +301,12 @@ export class CongFundComponent {
       console.log(err)
       this.loading = false
       Swal.fire({
-        title: 'Error',
+        title: '<h1 style="color:white;">Error</h1>',   
+        background:'rgba(30, 30, 30)',
+        color: 'white',
+        backdrop: `
+        rgba(53,53,53,0.4)
+        ` ,
         text: 'Ocurrió un error inesperado',
         icon: 'error',
         confirmButtonText: 'OK'
@@ -269,7 +329,12 @@ export class CongFundComponent {
       console.log(res)  
       this.loading = false
       Swal.fire({
-        title: 'Correcto',
+        title: '<h1 style="color:white;">Correcto</h1>',   
+        background:'rgba(30, 30, 30)',
+        color: 'white',
+        backdrop: `
+        rgba(53,53,53,0.4)
+        ` , 
         text: 'La secuencia se guardó correctamente',
         icon: 'success',
         confirmButtonText: 'OK'
@@ -280,7 +345,12 @@ export class CongFundComponent {
       console.log(err)
       this.loading = false
       Swal.fire({
-        title: 'Error',
+        title: '<h1 style="color:white;">Error</h1>',   
+        background:'rgba(30, 30, 30)',
+        color: 'white',
+        backdrop: `
+        rgba(53,53,53,0.4)
+        ` ,
         text: 'Ocurrió un error inesperado',
         icon: 'error',
         confirmButtonText: 'OK'

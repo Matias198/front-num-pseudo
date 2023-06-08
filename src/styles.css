@@ -1,7 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~bootstrap-icons/font/bootstrap-icons.css";
+@import url('/node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css');
 @import url('/node_modules/@nebular/theme/styles/prebuilt/cosmic.css');
+@import url('/node_modules/@sweetalert2/theme-material-ui/material-ui.css');
 /*@import "/node_modules/nebular/theme/styles/prebuilt/cosmic.css"; */
 
 body {
@@ -12,7 +14,7 @@ body {
 }
 
 .bg-cosmic{
-  background-color: #323259;
+  background-color: #323259; 
 }
 
 .card {
