@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {formatCurrency, getCurrencySymbol} from '@angular/common';
 import {
   FormBuilder,
   FormControl,
@@ -15,7 +16,9 @@ import { Router } from '@angular/router';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { environment } from 'src/environments/environment.development';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'; 
+import * as math from 'mathjs';
+ 
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -37,7 +40,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './existencias.component.html',
   styleUrls: ['./existencias.component.css'],
 })
-export class ExistenciasComponent {
+export class ExistenciasComponent implements OnInit {
   public loading = false;
   public matcher = new MyErrorStateMatcher();
   mediaFormControl = new FormControl(150, Validators.required);
@@ -53,9 +56,9 @@ export class ExistenciasComponent {
   idNumGenFormControl = new FormControl(15, Validators.required);
 
   vecesNoSatisfaceDemanda = 0
-  perdidaButo = 0
-  ganandciaBruto = 0
-  gananciaNto = 0
+  perdidaButo = ''
+  ganandciaBruto = ''
+  gananciaNto = ''
 
   displayedColumns: string[] = [
     'dia',
@@ -71,7 +74,7 @@ export class ExistenciasComponent {
   dataSource:any
 
   
-  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+  @ViewChild(BaseChartDirective) chart?: BaseChartDirective; 
 
   handlePageEvent(e: PageEvent) { 
 
@@ -114,6 +117,102 @@ export class ExistenciasComponent {
       }
     },    
   };
+
+  public lineChartData2: ChartConfiguration['data'] = {
+    datasets: [
+      {
+        data:  [],
+        label: 'Distribucion Normal',
+        backgroundColor: 'rgba(26, 74, 232, 0.3)',
+        borderColor: 'rgba(5, 33, 125, 0.8)',
+        pointBackgroundColor: 'rgba(26, 74, 232, 0.3)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(5, 33, 125, 0.8)',
+        fill: 'origin',
+      },
+      {
+        data: [],
+        label: 'Distribucion del Modelo',
+        backgroundColor: 'rgba(3, 135, 18, 0.3)',
+        borderColor: 'rgba(0, 135, 18, 0.8)',
+        pointBackgroundColor: 'green',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'green',
+        fill: 'origin',
+      },
+    ],
+    labels: []
+  } 
+
+  ngOnInit(){ 
+  }
+
+  graficar(M:any, D:any, C:any, datos:any){
+    const media = M;
+    const desvioEstandar = D;
+    const cantidadPuntos = C;
+    
+    const valoresZ = this.calcularValoresZAmplitud(media, desvioEstandar, cantidadPuntos);
+    const probabilidades = valoresZ.map((z: number) => this.calcularFuncionDensidadProbabilidad(z, media, desvioEstandar));
+     
+    let media2 = 0
+    for (let i = 0; i < datos.length; i++) {
+      media2 += datos[i]; 
+    }
+    media2 = media2 / datos.length
+
+    const desvioE2 = this.calcularDesvioEstandar(datos)
+    const valoresZ2 = this.calcularValoresZAmplitud(media2, desvioE2, cantidadPuntos);
+    const probabilidades2 = valoresZ2.map((z: number) => this.calcularFuncionDensidadProbabilidad(z, media, desvioEstandar));
+    
+    console.log(media,desvioEstandar,cantidadPuntos)
+    console.log(media2,desvioE2,cantidadPuntos)
+
+    this.lineChartData2.datasets[0].data = probabilidades;
+    this.lineChartData2.datasets[0].label = 'Distribucion Normal Estándar'
+    this.lineChartData2.datasets[1].data = probabilidades2
+    this.lineChartData2.labels = valoresZ.map(String)
+    console.log(this.lineChartData2)
+    this.chart?.update() 
+  }
+
+  calcularDesvioEstandar(datosContinuos: number[]): number {
+    const n = datosContinuos.length; 
+    const media = datosContinuos.reduce((sum, value) => sum + value, 0) / n;   
+    const sumCuadradosDiferencias = datosContinuos.reduce((sum, value) => sum + Math.pow(value - media, 2), 0); 
+    const desvioEstandar = Math.sqrt(sumCuadradosDiferencias / (n - 1));
+    return desvioEstandar;
+  }
+
+  calcularFuncionDensidadProbabilidad(z: number, media: number, desvioEstandar: number): number {
+    const denominador = desvioEstandar * Math.sqrt(2 * Math.PI);
+    const exponente = -Math.pow(z - media, 2) / (2 * Math.pow(desvioEstandar, 2));
+    const probabilidad = Math.exp(exponente) / denominador;
+    return probabilidad;
+  }
+
+  calcularValoresZAmplitud(media: number, desvioEstandar: number, cantidadPuntos: number): number[] {
+    const amplitudZ = 4; // Amplitud de Z deseada
+    const paso = amplitudZ / cantidadPuntos;
+    const valoresZ = [];
+    for (let i = -amplitudZ / 2; i <= amplitudZ / 2; i += paso) {
+      valoresZ.push(parseFloat((i * desvioEstandar + media).toFixed(2)));
+    }  
+    return valoresZ;
+  }
+
+  estandarizarDatosAZ(datos: number[], media: number, desvioEstandar: number): number[] {
+    return datos.map(x => (x - media) / desvioEstandar);
+  }
+
+  calcularFuncionDensidadProbabilidadZ(z: number): number {
+    const denominador = Math.sqrt(2 * Math.PI);
+    const exponente = -Math.pow(z, 2) / 2;
+    return parseFloat((Math.exp(exponente) / denominador).toFixed(4));
+  }
+
   enviarDatos() {
     console.log(
       this.mediaFormControl.value,
@@ -157,10 +256,10 @@ export class ExistenciasComponent {
       const comprarRango = this.comprarRangoFormControl.value;
       const critico = this.criticoFormControl.value;
       
-      this.vecesNoSatisfaceDemanda = 0 
-      this.perdidaButo = 0
-      this.ganandciaBruto = 0
-      this.gananciaNto = 0
+      this.vecesNoSatisfaceDemanda = 0
+      this.perdidaButo = ''
+      this.ganandciaBruto = ''
+      this.gananciaNto = ''
       const json = {
         media,
         desvio,
@@ -180,19 +279,20 @@ export class ExistenciasComponent {
           let response:any = JSON.parse(JSON.stringify(res))
           response.demanda = Array.from(JSON.stringify(response.demanda).toString().replace(/("|\{|\})/g, '').split(',')).reverse().map(Number)
           response.dia = Array.from(JSON.stringify(response.dia).toString().replace(/("|\{|\})/g, '').split(',')).reverse().map(Number)
-          for (let i = 1; i < parseInt(comprarRango.toString()); i++) {
+          
+          for (let i = 1; i < comprarRango; i++) {
             response.demanda.pop()
             response.dia.pop()
           }
-          response.dia.pop()
           response.demanda = response.demanda.reverse()
+          response.dia = response.dia.reverse()
+          response.dia.pop()
           response.demanda.pop()
-          response.dia = response.dia.reverse()  
-          
-          let json:any
+
+          let json2:any
           let ELEMENT_DATA:PeriodicElement[] = []
-          for (let i = 0; i < response.dia.length-1; i++) {
-            json = {
+          for (let i = 0; i < response.dia.length; i++) {
+            json2 = {
               'cantidadPedir':response.cantidadPedir[i],
               'costoTotal':response.costoTotal[i],
               'demanda':response.demanda[i],
@@ -203,23 +303,26 @@ export class ExistenciasComponent {
               'leyenda':response.leyenda[i],
               'perdidaTotal':response.perdidaTotal[i]
             }
-            ELEMENT_DATA.push(json)
+            ELEMENT_DATA.push(json2)
           }
           this.dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA); 
-          for (let i = 0; i < response.cantidadPedir.length; i++) {
-            const element = response.cantidadPedir[i];
+          for (let i = 0; i < response.demandaInsatisfecha.length; i++) {
+            const element = response.demandaInsatisfecha[i];
             if (element != 0){
               this.vecesNoSatisfaceDemanda++ 
             }
           }
-          this.perdidaButo = response.totalPerdida
-          this.ganandciaBruto = response.totalCosto
-          this.gananciaNto = this.ganandciaBruto - this.perdidaButo
           
+          this.perdidaButo = formatCurrency(response.totalPerdida, 'en-US', getCurrencySymbol('USD', 'wide'));
+          this.ganandciaBruto = formatCurrency(response.totalCosto, 'en-US', getCurrencySymbol('USD', 'wide'));
+          this.gananciaNto = formatCurrency(response.totalCosto - response.totalPerdida, 'en-US', getCurrencySymbol('USD', 'wide')); 
+          /*
           this.lineChartData.datasets[1].data = response.perdidaTotal
           this.lineChartData.datasets[0].data = response.costoTotal
           this.lineChartData.labels = response.dia.map((_:any, index:any) => index.toString());
           this.chart?.update()
+          */
+          this.graficar(json.media, json.desvio, json.dias, response.demanda) 
 
           Swal.fire({
             title: '<h1 style="color:white;">Correcto</h1>',

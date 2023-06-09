@@ -30,4 +30,8 @@ export class MainComponent{
   goToNumGenHistory(){
     this.rutas.navigate(['num-gen/historial']);
   }
+
+  goToExistenciasHistory(){
+    this.rutas.navigate(['existencias/historial']);
+  }
 }
